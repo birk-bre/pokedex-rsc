@@ -23,16 +23,13 @@ type Pokemon = {
 async function catchPokemon(data: FormData) {
   "use server";
   const id = crypto.randomUUID();
-  const name = data.get("pokemonName");
-  const pokemonId = data.get("pokemonId");
-  const pokemonShiny = data.get("pokemonShiny");
+  const name = data.get("pokemonName") as string;
+  const pokemonId = data.get("pokemonId") as unknown as string;
+  const pokemonShiny = data.get("pokemonShiny") as string;
 
-  try {
-    await sql`INSERT INTO pokemon (id, pokemonId, name, shiny) VALUES (${id}, ${pokemonId}, ${name}, ${pokemonShiny})`;
-    revalidatePath("/catch");
-  } catch (e) {
-    console.error(e);
-  }
+  await sql`INSERT INTO pokemon (id, pokemonId, name, shiny) VALUES (${id}, ${pokemonId}, ${name}, ${pokemonShiny})`;
+  revalidatePath("/catch");
+  revalidatePath("/pokemon/");
 }
 
 export default async function Page() {
@@ -44,7 +41,7 @@ export default async function Page() {
   const isShiny = Math.floor(Math.random() * 100) === 1;
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center p-4">
       <h1>
         You found a {isShiny ? "shiny" : ""}
         <span className="text-blue-800">
@@ -88,6 +85,6 @@ export default async function Page() {
           Throw ball
         </button>
       </form>
-    </>
+    </div>
   );
 }
