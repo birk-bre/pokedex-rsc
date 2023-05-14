@@ -29,7 +29,6 @@ async function catchPokemon(data: FormData) {
 
   await sql`INSERT INTO pokemon (id, pokemonId, name, shiny) VALUES (${id}, ${pokemonId}, ${name}, ${pokemonShiny})`;
   revalidatePath("/catch");
-  revalidatePath("/pokemon/");
 }
 
 export default async function Page() {

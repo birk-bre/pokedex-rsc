@@ -8,6 +8,7 @@ type Pokemon = {
   id: string;
 };
 
+export const revalidate = 0;
 export default async function PokemonPage() {
   const { rows } = (await sql`SELECT * FROM pokemon`) as { rows: Pokemon[] };
   return (
