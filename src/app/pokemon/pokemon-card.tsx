@@ -64,8 +64,7 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
           document.body.style.cursor = "default";
         }}
         whileTap={{ cursor: "grabbing" }}
-        drag
-        dragElastic={1}
+        drag={false}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         className="will-change-transform aspect-[1/1.35] bg-black p-1 rounded-md shadow-cardShadow hover:shadow-cardShadowHover transition-transform origin-center"
       >
