@@ -1,6 +1,6 @@
-import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import Image from "next/image";
+import { client } from "../../../dbClient";
 
 type Sprite = {
   front_default: string;
@@ -27,7 +27,10 @@ async function catchPokemon(data: FormData) {
   const pokemonId = data.get("pokemonId") as unknown as string;
   const pokemonShiny = data.get("pokemonShiny") as string;
 
-  await sql`INSERT INTO pokemon (id, pokemonId, name, shiny) VALUES (${id}, ${pokemonId}, ${name}, ${pokemonShiny})`;
+  await client.execute(
+    "INSERT INTO pokemon (id, pokemonId, name, shiny) VALUES (?, ?, ?, ?)",
+    [id, pokemonId, name, pokemonShiny]
+  );
   revalidatePath("/catch");
 }
 
@@ -38,7 +41,6 @@ export default async function Page() {
   );
   const pokemon: Pokemon = await data.json();
   const isShiny = Math.floor(Math.random() * 6) === 3;
-  console.log(Math.floor(Math.random() * 6));
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
@@ -74,7 +76,6 @@ export default async function Page() {
         ) : null}
       </h1>
       <form action={catchPokemon}>
-        <label htmlFor="pokemonName">Nickname</label>
         <input
           className="p-2 border"
           type="text"

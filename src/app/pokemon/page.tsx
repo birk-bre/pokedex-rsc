@@ -1,16 +1,19 @@
 import { PokemonCard } from "@/app/pokemon/pokemon-card";
-import { sql } from "@vercel/postgres";
+import { client } from "../../../dbClient";
 
 type Pokemon = {
+  id: string;
   pokemonid: number;
   name: string;
   shiny: string;
-  id: string;
 };
 
 export const revalidate = 0;
 export default async function PokemonPage() {
-  const { rows } = (await sql`SELECT * FROM pokemon`) as { rows: Pokemon[] };
+  const { rows } = (await client.execute(
+    `SELECT * FROM pokemon`
+  )) as unknown as { rows: Pokemon[] };
+
   return (
     <div className="grid grid-cols-3 gap-4">
       {rows.map((pokemon) => {

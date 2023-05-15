@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { releasePokemon } from "./action";
 import { Release } from "./release";
+import { client } from "../../../../dbClient";
 
 type Pokemon = {
   pokemonid: number;
@@ -13,10 +14,9 @@ type Pokemon = {
 };
 
 export default async function Pokemon({ params }: any) {
-  const { rows } =
-    (await sql`SELECT * FROM pokemon WHERE id = ${params.id}`) as {
-      rows: Pokemon[];
-    };
+  const { rows } = (await client.execute("SELECT * FROM pokemon WHERE id = ?", [
+    params.id,
+  ])) as unknown as { rows: Pokemon[] };
 
   const pokemon = rows[0];
   return (
