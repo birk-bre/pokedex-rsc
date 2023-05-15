@@ -77,12 +77,14 @@ export default async function Page() {
       </h1>
       <form action={catchPokemon}>
         <input
+          key={pokemon.id}
           className="p-2 border"
           type="text"
           name="pokemonName"
           defaultValue={pokemon.name}
           placeholder="Nickname"
         />
+
         <input type="hidden" name="pokemonId" defaultValue={pokemon.id} />
         <input
           type="hidden"
