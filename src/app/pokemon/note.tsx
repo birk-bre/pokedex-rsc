@@ -1,6 +1,7 @@
 "use client";
 
 import { usePersistedStateIDB } from "@/setPersitedStateIDB";
+import { motion } from "framer-motion";
 import { Pencil, X } from "lucide-react";
 import { useState } from "react";
 
@@ -17,7 +18,13 @@ export function Note({ id }: { id: string }) {
         {isWriting ? <X /> : <Pencil />}
       </button>
       {isWriting ? (
-        <input
+        <motion.input
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+          }}
           className="p-2 rounded-md border-2 border-slate-700 shadow-sm"
           placeholder="Notes about this Pokemon"
           value={persistNote}

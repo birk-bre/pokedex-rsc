@@ -4,6 +4,13 @@ import Link from "next/link";
 import { Note } from "./note";
 import { Sparkle } from "@/components/sparkle/sparkle";
 import { useEffect, useRef } from "react";
+import {
+  Variants,
+  cubicBezier,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 type Pokemon = {
   pokemonid: number;
   name: string;
@@ -12,56 +19,54 @@ type Pokemon = {
 };
 
 export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
 
-  useEffect(() => {
-    function handleTransform(e: MouseEvent) {
-      let pos = [e.offsetX, e.offsetY];
-
-      let l = pos[0];
-      let t = pos[1];
-
-      console.log(l, t);
-
-      let h = cardRef.current!.clientHeight;
-      let w = cardRef.current!.clientWidth;
-
-      let px = Math.abs(Math.floor((100 / w) * l) - 100);
-      let py = Math.abs(Math.floor((100 / h) * t) - 100);
-
-      let lp = 50 + (px - 50) / 1.5;
-      let tp = 50 + (py - 50) / 1.5;
-
-      let ty = ((tp - 50) / 2) * -1;
-      let tx = ((lp - 50) / 1.5) * 0.5;
-
-      // console.log(h, w);
-      // console.log(tx, ty);
-
-      let tf = `transform: rotateX(${ty}deg) rotateY(${tx}deg); transition: transform 400ms ease`;
-
-      cardRef.current?.setAttribute("style", tf);
-    }
-
-    function handleRemove() {
-      cardRef.current?.setAttribute("style", "");
-    }
-    if (cardRef.current) {
-      const ref = cardRef.current;
-      ref.addEventListener("mousemove", handleTransform);
-      ref.addEventListener("mouseleave", handleRemove);
-
-      return () => {
-        ref?.removeEventListener("mousemove", handleTransform);
-        ref?.removeEventListener("mouseleave", handleRemove);
-      };
-    }
-  }, []);
+  const rotateX = useTransform(y, [0, 1], [-20, 20]);
+  const rotateY = useTransform(x, [0, 1], [20, -20]);
 
   return (
     <div>
-      <div
-        ref={cardRef}
+      <motion.div
+        style={{
+          rotateX,
+          rotateY,
+        }}
+        transition={{
+          rotateX: {
+            type: "tween",
+            duration: 1,
+          },
+          rotateY: {
+            type: "tween",
+            duration: 1,
+          },
+        }}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+
+          const xPos = (e.clientX - rect.left) / rect.width;
+          const yPos = (e.clientY - rect.top) / rect.height;
+
+          console.log(xPos);
+
+          x.set(xPos);
+          y.set(yPos);
+        }}
+        onMouseLeave={() => {
+          x.set(0.5);
+          y.set(0.5);
+        }}
+        onHoverStart={() => {
+          document.body.style.cursor = "grab";
+        }}
+        onHoverEnd={() => {
+          document.body.style.cursor = "default";
+        }}
+        whileTap={{ cursor: "grabbing" }}
+        drag
+        dragElastic={1}
+        dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         className="will-change-transform aspect-[1/1.35] p-1 rounded-md shadow-cardShadow hover:shadow-cardShadowHover transition-transform origin-center"
       >
         <Link
@@ -96,7 +101,7 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
             ) : null}
           </div>
         </Link>
-      </div>
+      </motion.div>
       <Note id={pokemon.id} />
     </div>
   );
