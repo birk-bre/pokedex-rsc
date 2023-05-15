@@ -30,7 +30,7 @@ export default function RootLayout({
               </h1>
             </Link>
           </div>
-          {children}
+          <ClientContext>{children}</ClientContext>
         </div>
       </body>
     </html>
