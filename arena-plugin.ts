@@ -1,3 +1,4 @@
+"use client";
 declare global {
   interface Window {
     carePlanArenaPluginApi: CarePlanArenaPluginApi;
@@ -9,7 +10,10 @@ interface CarePlanArenaPluginApi {
 }
 
 function getPatientId(): number | null {
-  return window?.carePlanArenaPluginApi?.patientId();
+  if (typeof window !== "undefined") {
+    return window?.carePlanArenaPluginApi?.patientId();
+  }
+  return null;
 }
 
 export { getPatientId };

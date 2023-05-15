@@ -2,7 +2,6 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { setItem, getItem, removeItem } from "./idbHelper";
 import { KeyContext } from "./app/client-context";
-import { useId } from "@react-aria/utils";
 
 export function usePersistedStateIDB<T>(
   defaultValue: T,
