@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { ClientContext } from "./client-context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -29,7 +30,7 @@ export default function RootLayout({
               </h1>
             </Link>
           </div>
-          {children}
+          <ClientContext>{children}</ClientContext>
         </div>
       </body>
     </html>

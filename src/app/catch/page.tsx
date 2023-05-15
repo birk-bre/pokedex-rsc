@@ -37,12 +37,13 @@ export default async function Page() {
     `https://pokeapi.co/api/v2/pokemon/${randomPokemonId}`
   );
   const pokemon: Pokemon = await data.json();
-  const isShiny = Math.floor(Math.random() * 100) === 1;
+  const isShiny = Math.floor(Math.random() * 6) === 3;
+  console.log(Math.floor(Math.random() * 6));
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <h1>
-        You found a {isShiny ? "shiny" : ""}
+        You found a {isShiny ? "shiny " : ""}
         <span className="text-blue-800">
           {pokemon.name
             .charAt(0)
@@ -59,11 +60,18 @@ export default async function Page() {
           </p>
         ))}
         <Image
-          src={pokemon.sprites.front_default}
+          src={
+            isShiny
+              ? pokemon.sprites.front_shiny
+              : pokemon.sprites.front_default
+          }
           alt={pokemon.name}
           width={256}
           height={256}
         />
+        {isShiny ? (
+          <p className="font-bold text-yellow-500 text-center">ITS SHINY</p>
+        ) : null}
       </h1>
       <form action={catchPokemon}>
         <label htmlFor="pokemonName">Nickname</label>
@@ -80,9 +88,22 @@ export default async function Page() {
           name="pokemonShiny"
           defaultValue={isShiny ? "true" : "false"}
         />
-        <button className="border p-2" type="submit">
-          Throw ball
-        </button>
+        <div className="flex gap-4 p-4">
+          <button className="border p-2 flex items-center gap-2" type="submit">
+            <Image src="/pokeball.png" width={32} height={32} alt="pokeball" />
+            Throw ball
+          </button>
+          <button
+            formAction={async () => {
+              "use server";
+              revalidatePath("/catch");
+            }}
+            className="border p-2"
+            type="submit"
+          >
+            Run away
+          </button>
+        </div>
       </form>
     </div>
   );

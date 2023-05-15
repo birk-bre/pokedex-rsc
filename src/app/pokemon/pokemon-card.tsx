@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Note } from "./note";
+import { Sparkle } from "@/components/sparkle/sparkle";
 type Pokemon = {
   pokemonid: number;
   name: string;
@@ -22,17 +23,21 @@ export const PokemonCard = async ({ pokemon }: { pokemon: Pokemon }) => {
         >
           <h1 className="text-4xl font-bold">{pokemon.name}</h1>
           <Image
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemonid}.png`}
+            src={
+              pokemon.shiny === "true"
+                ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.pokemonid}.png`
+                : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemonid}.png`
+            }
             alt={pokemon.name}
             width={128}
             height={128}
           />
-          <p className="text-2xl font-bold">
-            {pokemon.shiny === "true" ? "Shiny" : "Not shiny"}
-          </p>
+          {pokemon.shiny === "true" ? (
+            <Sparkle text={pokemon.shiny === "true" ? "Shiny" : "Not shiny"} />
+          ) : null}
         </div>
       </Link>
-      <Note />
+      <Note id={pokemon.id} />
     </div>
   );
 };

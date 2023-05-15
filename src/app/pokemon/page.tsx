@@ -1,4 +1,4 @@
-import { PokemonCard } from "@/app/pokemon/PokemonCard";
+import { PokemonCard } from "@/app/pokemon/pokemon-card";
 import { sql } from "@vercel/postgres";
 
 type Pokemon = {
