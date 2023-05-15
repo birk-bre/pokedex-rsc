@@ -3,14 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Note } from "./note";
 import { Sparkle } from "@/components/sparkle/sparkle";
-import { useEffect, useRef } from "react";
-import {
-  Variants,
-  cubicBezier,
-  motion,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+
+import { motion, useMotionValue, useTransform } from "framer-motion";
 type Pokemon = {
   pokemonid: number;
   name: string;

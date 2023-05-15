@@ -3,7 +3,6 @@
 import { usePersistedStateIDB } from "@/setPersitedStateIDB";
 import { motion } from "framer-motion";
 import { Pencil, X } from "lucide-react";
-import { useState } from "react";
 
 export function Note({ id }: { id: string }) {
   const [isWriting, setWriting] = usePersistedStateIDB(false, `writing:${id}`);

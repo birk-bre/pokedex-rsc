@@ -1,5 +1,4 @@
-// usePersistedStateIDB.js
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { setItem, getItem, removeItem } from "./idbHelper";
 import { KeyContext } from "./app/client-context";
 
@@ -35,7 +34,7 @@ export function usePersistedStateIDB<T>(
       typeof action === "function"
         ? (action as (prevState: T) => T)(state)
         : action;
-    await setItem(resolvedKey, {
+    setItem(resolvedKey, {
       value: newState,
       timestamp: Date.now(),
     });
