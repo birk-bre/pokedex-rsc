@@ -1,8 +1,4 @@
-import { sql } from "@vercel/postgres";
-
-import { redirect } from "next/navigation";
 import Image from "next/image";
-import { releasePokemon } from "./action";
 import { Release } from "./release";
 import { client } from "../../../../dbClient";
 
