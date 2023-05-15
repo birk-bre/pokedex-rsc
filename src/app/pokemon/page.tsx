@@ -15,7 +15,7 @@ export default async function PokemonPage() {
   )) as unknown as { rows: Pokemon[] };
 
   return (
-    <div className="grid grid-cols-3 gap-4 max-w-[660px]">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[660px]">
       {rows.map((pokemon) => {
         return <PokemonCard pokemon={pokemon} key={pokemon.id} />;
       })}
