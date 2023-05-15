@@ -67,7 +67,7 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
         drag
         dragElastic={1}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-        className="will-change-transform aspect-[1/1.35] p-1 rounded-md shadow-cardShadow hover:shadow-cardShadowHover transition-transform origin-center"
+        className="will-change-transform aspect-[1/1.35] bg-black p-1 rounded-md shadow-cardShadow hover:shadow-cardShadowHover transition-transform origin-center"
       >
         <Link
           href={{
@@ -78,7 +78,16 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
             className="flex flex-col p-2 gap-4 rounded-md items-center justify-center"
             key={pokemon.id}
           >
-            <h1 className="text-4xl font-bold">
+            <h1
+              className="text-4xl font-bold  from-purple-400 to-pink-600"
+              style={{
+                backgroundSize: "200% 200%",
+                background:
+                  "linear-gradient(to right, var(--tw-gradient-stops))",
+                WebkitBackgroundClip: "text",
+                WebkitTextStroke: "4px transparent",
+              }}
+            >
               {pokemon.name
                 .charAt(0)
                 .toUpperCase()
