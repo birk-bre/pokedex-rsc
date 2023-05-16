@@ -16,7 +16,7 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
 
-  const rotateX = useTransform(y, [0, 1], [-20, 20]);
+  const rotateX = useTransform(y, [0, 1], [20, -20]);
   const rotateY = useTransform(x, [0, 1], [20, -20]);
 
   return (

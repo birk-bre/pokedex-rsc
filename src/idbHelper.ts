@@ -1,4 +1,3 @@
-// idbHelper.js
 import { openDB } from "idb";
 
 type StoredValue<T> = {
