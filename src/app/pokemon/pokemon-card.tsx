@@ -42,8 +42,6 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
           const xPos = (e.clientX - rect.left) / rect.width;
           const yPos = (e.clientY - rect.top) / rect.height;
 
-          console.log(xPos);
-
           x.set(xPos);
           y.set(yPos);
         }}
@@ -60,7 +58,7 @@ export const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
         whileTap={{ cursor: "grabbing" }}
         drag={false}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-        className="will-change-transform aspect-[1/1.35] bg-black p-1 rounded-md shadow-cardShadow hover:shadow-cardShadowHover transition-transform origin-center"
+        className="will-change-transform aspect-[1/1.35] bg-black p-1 rounded-md shadow-cardShadow hover:shadow-cardShadowHover origin-center"
       >
         <Link
           href={{
